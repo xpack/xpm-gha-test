@@ -54,7 +54,9 @@ jobs:
       run: npm install -g xpm@next
 
     - name: Satisfy dependencies
-      run: xpm install --all-configs
+      run: |
+        xpm install --all-configs
+        ls -l node_modules/.bin xpack/.bin
 
     - name: Run test
       run: |
