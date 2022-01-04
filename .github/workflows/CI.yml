@@ -56,7 +56,8 @@ jobs:
     - name: Satisfy dependencies
       run: |
         xpm install --all-configs
-        ls -l node_modules/.bin xpacks/.bin
+        ls -l node_modules/.bin
+        ls -l xpacks/.bin
 
     - name: Run test
       run: |

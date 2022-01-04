@@ -27,13 +27,13 @@
   "config": {},
   "dependencies": {},
   "devDependencies": {
-    "@xpack-dev-tools/cmake": "3.20.6-2.1",
+    "@xpack-dev-tools/ninja-build": "1.10.2-5.1",
     "xsvd": "^0.3.0"
   },
   "xpack": {
     "minimumXpmRequired": "0.11.2",
     "actions": {
-      "test": "cmake --version",
+      "test": "ninja --version",
       "x2": "xsvd --version"
     }
 
