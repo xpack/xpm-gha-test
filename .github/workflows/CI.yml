@@ -58,10 +58,14 @@ jobs:
         xpm install --all-configs
         ls -l node_modules/.bin
         ls -l xpacks/.bin
-        # rm xpacks/.bin/ninja.ps1
-        ls -l xpacks/.bin
+        echo '---'
+        cat xpacks/.bin/ninja.ps1
+        echo '---'
         cat xpacks/.bin/ninja.cmd
+        echo '---'
         cp ninja.cmd xpacks/.bin/ninja.cmd
+        cat xpacks/.bin/ninja.cmd
+        echo '---'
 
     - name: Run test
       run: |
