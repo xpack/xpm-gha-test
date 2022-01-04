@@ -4,7 +4,8 @@
   "description": "A source xPack with <your-description-here>",
   "main": "",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "x1": "xsvd --version"
   },
   "repository": {
     "type": "git",
@@ -26,12 +27,14 @@
   "config": {},
   "dependencies": {},
   "devDependencies": {
-    "@xpack-dev-tools/cmake": "3.20.6-2.1"
+    "@xpack-dev-tools/cmake": "3.20.6-2.1",
+    "xsvd": "^0.3.0"
   },
   "xpack": {
     "minimumXpmRequired": "0.11.2",
     "actions": {
-      "test": "cmake --version"
+      "test": "cmake --version",
+      "x2": "xsvd --version"
     }
 
   }

@@ -57,4 +57,7 @@ jobs:
       run: xpm install --all-configs
 
     - name: Run test
-      run: xpm run test -dd
+      run: |
+        npm run x1
+        xpm run x2
+        xpm run test -dd
