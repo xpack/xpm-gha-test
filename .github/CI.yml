@@ -1,0 +1,60 @@
+# https://help.github.com/en/actions
+# https://docs.github.com/en/actions/learn-github-actions/workflow-syntax-for-github-actions
+# https://github.com/actions
+
+# https://github.com/micro-os-plus/micro-test-plus-xpack/actions/workflows/CI.yml
+name: CI on Push
+
+on:
+  push:
+    paths-ignore:
+      - '.vscode/**'
+      - 'LICENSE'
+      - '**.md'
+      - '.clang-format'
+      - '.gitignore'
+      - '.npmignore'
+
+jobs:
+  ci-test:
+    name: 'CI tests'
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [14]
+        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+        os: [windows-2019]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 3
+
+    - name: Setup Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Show environment
+      run: |
+        uname -a
+        node --version
+        npm --version
+        env
+
+    - name: Install xpm on Unix
+      if: runner.os != 'Windows'
+      run: sudo npm install -g xpm@latest
+
+    - name: Install xpm on Windows
+      if: runner.os == 'Windows'
+      run: npm install -g xpm@next
+
+    - name: Satisfy dependencies
+      run: xpm install --all-configs
+
+    - name: Run test
+      run: xpm run test
