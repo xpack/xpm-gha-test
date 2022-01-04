@@ -51,14 +51,14 @@ jobs:
 
     - name: Install xpm on Windows
       if: runner.os == 'Windows'
-      run: npm install -g xpm@next
+      run: npm install -g xpm@latest
 
     - name: Satisfy dependencies
       run: |
         xpm install --all-configs
         ls -l node_modules/.bin
         ls -l xpacks/.bin
-        rm xpacks/.bin/ninja.ps1
+        # rm xpacks/.bin/ninja.ps1
         ls -l xpacks/.bin
         cat xpacks/.bin/ninja.cmd
 
