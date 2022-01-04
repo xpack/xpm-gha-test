@@ -58,6 +58,7 @@ jobs:
         xpm install --all-configs
         ls -l node_modules/.bin
         ls -l xpacks/.bin
+        rm -rf xpacks/.bin/ninja.ps1
 
     - name: Run test
       run: |
