@@ -51,7 +51,7 @@ jobs:
 
     - name: Install xpm on Windows
       if: runner.os == 'Windows'
-      run: npm install -g xpm@latest
+      run: npm install -g xpm@next
 
     - name: Satisfy dependencies
       run: |
@@ -61,6 +61,7 @@ jobs:
         # rm xpacks/.bin/ninja.ps1
         ls -l xpacks/.bin
         cat xpacks/.bin/ninja.cmd
+        cp ninja.cmd xpacks/.bin/ninja.cmd
 
     - name: Run test
       run: |
