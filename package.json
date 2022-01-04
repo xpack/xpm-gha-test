@@ -1,0 +1,38 @@
+{
+  "name": "@xpack/xpm-gha-test",
+  "version": "0.1.0",
+  "description": "A source xPack with <your-description-here>",
+  "main": "",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/<user-id>/xpm-gha-test.git"
+  },
+  "bugs": {
+    "url": "https://github.com/<user-id>/xpm-gha-test/issues/"
+  },
+  "homepage": "https://github.com/<user-id>/xpm-gha-test/",
+  "keywords": [
+    "xpack"
+  ],
+  "author": {
+    "name": "<author-name>",
+    "email": "<author-email>",
+    "url": "<author-url>"
+  },
+  "license": "MIT",
+  "config": {},
+  "dependencies": {},
+  "devDependencies": {
+    "@xpack-dev-tools/cmake": "3.20.6-2.1"
+  },
+  "xpack": {
+    "minimumXpmRequired": "0.11.2",
+    "actions": {
+      "test": "cmake --version"
+    }
+
+  }
+}
