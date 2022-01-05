@@ -16,7 +16,7 @@ on:
       - '.npmignore'
 
 jobs:
-  ci-test-windows:
+  ci-test-windows-cmd:
     name: 'CI tests Windows'
 
     strategy:
@@ -24,7 +24,6 @@ jobs:
         node-version: [14]
         # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
         os: [windows-2019]
-        shell: [cmd, powershell]
 
     runs-on: ${{ matrix.os }}
 
@@ -47,11 +46,11 @@ jobs:
         env
 
     - name: Install xpm on Windows
-      shell: ${{ matrix.shell }}
+      shell: cmd
       run: npm install -g xpm@next
 
     - name: Satisfy dependencies
-      shell: ${{ matrix.shell }}
+      shell: cmd
       run: |
         xpm install --all-configs
         ls -l node_modules/.bin
@@ -63,7 +62,59 @@ jobs:
         echo '---'
 
     - name: Run test
-      shell: ${{ matrix.shell }}
+      shell: cmd
+      run: |
+        npm run x1
+        xpm run x2
+        xpm run test -dd
+
+  ci-test-windows-pwsh:
+    name: 'CI tests Windows'
+
+    strategy:
+      matrix:
+        node-version: [14]
+        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+        os: [windows-2019]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 3
+
+    - name: Setup Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Show environment
+      run: |
+        uname -a
+        node --version
+        npm --version
+        env
+
+    - name: Install xpm on Windows
+      shell: powershell
+      run: npm install -g xpm@next
+
+    - name: Satisfy dependencies
+      shell: powershell
+      run: |
+        xpm install --all-configs
+        ls -l node_modules/.bin
+        ls -l xpacks/.bin
+        echo '---'
+        cat xpacks/.bin/ninja.ps1
+        echo '---'
+        cat xpacks/.bin/ninja.cmd
+        echo '---'
+
+    - name: Run test
+      shell: powershell
       run: |
         npm run x1
         xpm run x2
