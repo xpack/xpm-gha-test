@@ -63,9 +63,6 @@ jobs:
         echo '---'
         cat xpacks/.bin/ninja.cmd
         echo '---'
-        cp ninja.cmd xpacks/.bin/ninja.cmd
-        cat xpacks/.bin/ninja.cmd
-        echo '---'
 
     - name: Run test
       run: |
