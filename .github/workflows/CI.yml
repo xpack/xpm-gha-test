@@ -16,8 +16,8 @@ on:
       - '.npmignore'
 
 jobs:
-  ci-test:
-    name: 'CI tests'
+  ci-test-windows:
+    name: 'CI tests Windows'
 
     runs-on: ${{ matrix.os }}
 
@@ -26,6 +26,59 @@ jobs:
         node-version: [14]
         # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
         os: [windows-2019]
+        shell: [cmd, powershell]
+
+    steps:
+    - name: Checkout
+      uses: actions/checkout@v1
+      with:
+        fetch-depth: 3
+
+    - name: Setup Node.js ${{ matrix.node-version }} on ${{ matrix.os }}
+      uses: actions/setup-node@v2
+      with:
+        node-version: ${{ matrix.node-version }}
+
+    - name: Show environment
+      run: |
+        uname -a
+        node --version
+        npm --version
+        env
+
+    - name: Install xpm on Windows
+      shell: ${{ matrix.shell }}
+      run: npm install -g xpm@next
+
+    - name: Satisfy dependencies
+      shell: ${{ matrix.shell }}
+      run: |
+        xpm install --all-configs
+        ls -l node_modules/.bin
+        ls -l xpacks/.bin
+        echo '---'
+        cat xpacks/.bin/ninja.ps1
+        echo '---'
+        cat xpacks/.bin/ninja.cmd
+        echo '---'
+
+    - name: Run test
+      shell: ${{ matrix.shell }}
+      run: |
+        npm run x1
+        xpm run x2
+        xpm run test -dd
+
+  ci-test-unix:
+    name: 'CI tests UNIX'
+
+    runs-on: ${{ matrix.os }}
+
+    strategy:
+      matrix:
+        node-version: [14]
+        # https://docs.github.com/en/actions/using-github-hosted-runners/about-github-hosted-runners
+        os: [ubuntu-18.04, macos-10.15]
 
     steps:
     - name: Checkout
@@ -46,23 +99,13 @@ jobs:
         env
 
     - name: Install xpm on Unix
-      if: runner.os != 'Windows'
       run: sudo npm install -g xpm@latest
-
-    - name: Install xpm on Windows
-      if: runner.os == 'Windows'
-      run: npm install -g xpm@next
 
     - name: Satisfy dependencies
       run: |
         xpm install --all-configs
         ls -l node_modules/.bin
         ls -l xpacks/.bin
-        echo '---'
-        cat xpacks/.bin/ninja.ps1
-        echo '---'
-        cat xpacks/.bin/ninja.cmd
-        echo '---'
 
     - name: Run test
       run: |
